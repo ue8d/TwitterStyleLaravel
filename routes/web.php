@@ -34,4 +34,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // コメント関連
     Route::resource('comments', 'CommentsController', ['only' => ['store']]);
+
+    // いいね関連
+    Route::resource('favorites', 'FavoritesController', ['only' => ['store', 'destroy']]);
 });
