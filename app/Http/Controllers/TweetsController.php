@@ -37,18 +37,30 @@ class TweetsController extends Controller
      */
     public function create()
     {
-        //
-    }
+        $user = auth()->user();
 
+        return view('tweets.create', [
+            'user' => $user
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Tweet $tweet)
     {
-        //
+        $user = auth()->user();
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'text' => ['required', 'string', 'max:140']
+        ]);
+
+        $validator->validate();
+        $tweet->tweetStore($user->id, $data);
+
+        return redirect('tweets');
     }
 
     /**
